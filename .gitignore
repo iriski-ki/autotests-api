@@ -1749,7 +1749,6 @@ paket-files/
 
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
-*.pyc
 
 # Cake - Uncomment if you are using it
 # tools/**
@@ -2104,8 +2103,6 @@ bin-debug/
 bin-release/
 
 ### Plone template
-*.pyc
-*.pyo
 *.tmp*
 *.mo
 *.egg
@@ -4008,7 +4005,6 @@ local.properties
 *.launch
 
 # PyDev specific (Python IDE for Eclipse)
-*.pydevproject
 
 # CDT-specific (C/C++ Development Tooling)
 .cproject
@@ -4399,7 +4395,6 @@ CMakeLists.txt.user
 
 srv/_*.py
 *.pcd
-*.pyc
 qtcreator-*
 *.user
 
@@ -4604,7 +4599,6 @@ themes/default-bootstrap/modules/*/mails/*
 # website: https://getnikola.com/
 
 .doit.db
-*.py[cod]
 cache/
 output/
 
@@ -5538,7 +5532,6 @@ EIFGENs
 **/IntegrationServer/packages/Wm*/
 
 ### TurboGears2 template
-*.py[co]
 
 # Default development database
 devdata.db
@@ -5826,7 +5819,6 @@ vc_hdrs.h
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
 *$py.class
 
 # C extensions
@@ -5872,7 +5864,6 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.cover
-*.py,cover
 .hypothesis/
 .pytest_cache/
 cover/
@@ -6014,7 +6005,6 @@ yarn.lock
 
 # Python #
 __pycache__/
-*.py[cod]
 *$py.class
 [Bb]ackup*
 
@@ -6187,7 +6177,6 @@ yarn-debug.log*
 *.*~
 project.lock.json
 .DS_Store
-*.pyc
 nupkg/
 
 # Visual Studio Code
@@ -6410,7 +6399,6 @@ CMakeLists.txt.user
 
 srv/_*.py
 *.pcd
-*.pyc
 qtcreator-*
 *.user
 
@@ -7098,7 +7086,6 @@ acs-*.bib
 
 # minted
 _minted*
-*.pyg
 
 # morewrites
 *.mw
@@ -7138,7 +7125,6 @@ sympy-plots-for-*.tex/
 *.upb
 
 # pythontex
-*.pytxcode
 pythontex-files-*/
 
 # tcolorbox
