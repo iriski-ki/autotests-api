@@ -4981,7 +4981,7 @@ install.php
 /modules/shop/*
 /modules/system/*
 /modules/users/*
-# add content_*.php if you don't want erase client changes to content
+# add content_*.php if you don't want erase clients changes to content
 
 ### Jekyll template
 _site/
