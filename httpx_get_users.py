@@ -16,9 +16,7 @@ login_payload = {
     "email": create_users_payload['email'],
     "password": create_users_payload['password']
 }
-login_response = httpx.post("http://localhost:8000/apiPOST
-/api/v1/authentication/login
-", json=login_payload)
+login_response = httpx.post("http://localhost:8000/api/v1/authentication/login", json=login_payload)
 login_response_data = login_response.json()
 print("Login response: ", login_response_data)
 
