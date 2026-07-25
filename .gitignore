@@ -1626,7 +1626,7 @@ PublishScripts/
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
-# NuGet v3's project.json files produces more ignorable files
+# NuGet v3's project.json.json files produces more ignorable files
 *.nuget.props
 *.nuget.targets
 
@@ -3617,11 +3617,11 @@ jboss/server/minimal/work/**/*
 #
 # Recommended template: Node.gitignore
 
-# protect api keys in setting json
+# protect api keys in setting json.json
 settings-production.json
 settings.json
 
-# protect your mup.json settings
+# protect your mup.json.json settings
 mup.json
 mup.js
 
@@ -6143,7 +6143,7 @@ config/master.key
 # unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
 .rvmrc
 
-# if using bower-rails ignore default bower_components path bower.json files
+# if using bower-rails ignore default bower_components path bower.json.json files
 /vendor/assets/bower_components
 *.bowerrc
 bower.json

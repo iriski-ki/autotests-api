@@ -1,37 +1,33 @@
-from typing import TypedDict
-
 from httpx import Response
 
 from clients.api_client import APIClient
-
-
-class CreateUserRequestDict(TypedDict):
-    """
-    Структура данных для запроса на создание пользователя.
-
-    Описывает тело запроса (payload), отправляемое на эндпоинт
-    POST /api/v1/users.
-    """
-    email: str
-    password: str
-    lastName: str
-    firstName: str
-    middleName: str
+from clients.public_http_builder import get_public_http_client
+from clients.users.users_schema import CreateUserResponseSchema, CreateUserRequestSchema
 
 
 class PublicUsersClient(APIClient):
     """
-    Клиент для работы с публичными методами API пользователей
-    (/api/v1/users), не требующими авторизации.
+    Клиент для работы с /api/v1/users
     """
 
-    def create_user_api(self, request: CreateUserRequestDict) -> Response:
+    def create_user_api(self, request: CreateUserRequestSchema) -> Response:
         """
-        Выполняет POST-запрос на создание нового пользователя.
+        Метод создает пользователя.
 
-        :param request: Данные пользователя для создания
-            (email, password, lastName, firstName, middleName).
-        :return: Объект httpx.Response с данными ответа сервера,
-            включая созданного пользователя в теле ответа.
+        :param request: Словарь с email, password, lastName, firstName, middleName.
+        :return: Ответ от сервера в виде объекта httpx.Response
         """
-        return self.post("/api/v1/users", json=request)
+        return self.post("/api/v1/users", json=request.model_dump(by_alias=True))
+
+    def create_user(self, request: CreateUserRequestSchema) -> CreateUserResponseSchema:
+        response = self.create_user_api(request)
+        return CreateUserResponseSchema.model_validate_json(response.text)
+
+
+def get_public_users_client() -> PublicUsersClient:
+    """
+    Функция создаёт экземпляр PublicUsersClient с уже настроенным HTTP-клиентом.
+
+    :return: Готовый к использованию PublicUsersClient.
+    """
+    return PublicUsersClient(client=get_public_http_client())
