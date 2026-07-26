@@ -1,14 +1,17 @@
 from pydantic import BaseModel
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, Field, EmailStr,ConfigDict
 from clients.files.file_shema import FileSchema
 from clients.users.users_schema import  UserSchema
 from pydantic import BaseModel
+from tools.fakers import fake
 
 
 class CourseSchema(BaseModel):
     """
     Описание структуры курса.
     """
+    model_config = ConfigDict(populate_by_name=True)
+
     id: str
     title: str
     max_score: int = Field(alias="maxScore")
@@ -23,27 +26,31 @@ class GetCoursesQuerySchema(BaseModel):
     """
     Описание структуры запроса на получение списка курсов.
     """
-    userId: str
+    model_config = ConfigDict(populate_by_name=True)
 
-
-class GetCoursesResponseSchema(BaseModel):
-    """
-    Описание структуры ответа на получение списка курсов.
-    """
-    courses: list[CourseSchema]
+    user_id: str = Field(alias="userId")
 
 
 class CreateCourseRequestSchema(BaseModel):
     """
     Описание структуры запроса на создание курса.
     """
-    title: str
-    max_score: int = Field(alias="maxScore")
-    min_score: int = Field(alias="minScore")
-    description: str
-    estimated_time: str = Field(alias="estimatedTime")
-    preview_file_id: str = Field(alias="previewFileId")
-    created_by_user_id: str = Field(alias="createdByUserId")
+    model_config = ConfigDict(populate_by_name=True)
+
+    # Добавили генерацию случайного заголовка
+    title: str = Field(default_factory=fake.sentence)
+    # Добавили генерацию случайного максимального балла
+    max_score: int = Field(alias="maxScore", default_factory=fake.max_score)
+    # Добавили генерацию случайного минимального балла
+    min_score: int = Field(alias="minScore", default_factory=fake.min_score)
+    # Добавили генерацию случайного описания
+    description: str = Field(default_factory=fake.text)
+    # Добавили генерацию случайного предполагаемого времени прохождения курса
+    estimated_time: str = Field(alias="estimatedTime", default_factory=fake.estimated_time)
+    # Добавили генерацию случайного идентификатора файла
+    preview_file_id: str = Field(alias="previewFileId", default_factory=fake.uuid4)
+    # Добавили генерацию случайного идентификатора пользователя
+    created_by_user_id: str = Field(alias="createdByUserId", default_factory=fake.uuid4)
 
 
 class CreateCourseResponseSchema(BaseModel):
@@ -57,8 +64,15 @@ class UpdateCourseRequestSchema(BaseModel):
     """
     Описание структуры запроса на обновление курса.
     """
-    title: str | None = None
-    maxScore: int | None = None
-    minScore: int | None = None
-    description: str | None = None
-    estimatedTime: str | None = None
+    model_config = ConfigDict(populate_by_name=True)
+
+    # Добавили генерацию случайного заголовка
+    title: str | None = Field(default_factory=fake.sentence)
+    # Добавили генерацию случайного максимального балла
+    max_score: int | None = Field(alias="maxScore", default_factory=fake.max_score)
+    # Добавили генерацию случайного минимального балла
+    min_score: int | None = Field(alias="minScore", default_factory=fake.min_score)
+    # Добавили генерацию случайного описания
+    description: str | None = Field(default_factory=fake.text)
+    # Добавили генерацию случайного предполагаемого времени прохождения курса
+    estimated_time: str | None = Field(alias="estimatedTime", default_factory=fake.estimated_time)
