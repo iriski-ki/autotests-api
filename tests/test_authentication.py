@@ -1,14 +1,11 @@
 from http import HTTPStatus
 import pytest  # Импортируем библиотеку pytest
 from clients.authentication.authentication_schema import LoginRequestSchema, LoginResponseSchema
-from clients.users.users_schema import CreateUserRequestSchema, CreateUserResponseSchema
 from clients.authentication.authenticationClient import AuthenticationClient
-from tests.conftest import UserFixture
+from fixtures.users import UserFixture
 from tools.assertions.authentication import assert_login_response
 from tools.assertions.base import assert_status_code
 from tools.assertions.schema import validate_json_schema
-from tools.assertions.users import assert_create_user_response
-from clients.users.public_users_client import PublicUsersClient
 
 
 @pytest.mark.authentication  # Добавили маркировку users
