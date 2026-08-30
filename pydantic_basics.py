@@ -28,7 +28,7 @@ class CourseSchema(BaseModel):
     title: str = "Playwright"
     max_score: int = Field(alias="maxScore", default=1000)
     min_score: int = Field(alias="minScore", default=100)
-    description: str = "Playwright course"
+    description: str = "Playwright courses"
     # Вложенный объект для файла-превью
     preview_file: FileSchema = Field(alias="previewFile")
     estimated_time: str = Field(alias="estimatedTime", default="2 weeks")
@@ -38,7 +38,7 @@ class CourseSchema(BaseModel):
 
 # Инициализируем модель CourseSchema через передачу аргументов
 course_default_model = CourseSchema(
-    id="course-id",
+    id="courses-id",
     title="Playwright",
     maxScore=100,
     minScore=10,
@@ -64,7 +64,7 @@ print('Course default model:', course_default_model)
 
 # Инициализируем модель CourseSchema через распаковку словаря
 course_dict = {
-    "id": "course-id",
+    "id": "courses-id",
     "title": "Playwright",
     "maxScore": 100,
     "minScore": 10,
@@ -94,7 +94,7 @@ print(course_dict_model.model_dump(by_alias=True))
 # Инициализируем модель CourseSchema через JSON
 course_json = """
 {
-    "id": "course-id",
+    "id": "courses-id",
     "title": "Playwright",
     "maxScore": 100,
     "minScore": 10,

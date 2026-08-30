@@ -8,5 +8,5 @@ channel = grpc.insecure_channel('localhost:50051')
 stub = course_service_pb2_grpc.CourseServiceStub(channel)
 
 # Отправляем запрос
-response = stub.GetCourse(course_service_pb2.GetCourseRequest(course_id="api-course"))
+response = stub.GetCourse(course_service_pb2.GetCourseRequest(course_id="api-courses"))
 print(response)  # Выведет: Привет, Alice!

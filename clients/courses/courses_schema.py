@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from pydantic import BaseModel, Field, EmailStr,ConfigDict
-from clients.files.file_shema import FileSchema
+from clients.files.files_schema import FileSchema
 from clients.users.users_schema import  UserSchema
 from pydantic import BaseModel
 from tools.fakers import fake
