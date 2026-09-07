@@ -1,8 +1,5 @@
 from http import HTTPStatus
-
 import pytest
-from httpcore import request
-
 from clients.courses.courses_client import CoursesClient
 from clients.courses.courses_schema import UpdateCourseRequestSchema, UpdateCourseResponseSchema, GetCoursesQuerySchema, \
     GetCoursesResponseSchema, CreateCourseRequestSchema, CreateCourseResponseSchema
@@ -58,7 +55,7 @@ class TestCourses:
                            courses_client: CoursesClient,
                            function_user: UserFixture,
                            function_file: FileFixture,
-                           function_course: CourseFixture
+
     ):
         request = CreateCourseRequestSchema(
             preview_file_id=function_file.response.file.id,
