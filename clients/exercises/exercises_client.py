@@ -1,5 +1,6 @@
 from typing import TypedDict
 
+from dns.e164 import query
 from httpx import Response, Client
 
 from clients.api_client import APIClient

@@ -27,6 +27,13 @@ class GetExercisesQuerySchema(BaseModel):
 
     course_id: str = Field(alias="courseId",default_factory=fake.uuid4)
 
+class GetExerciseQuerySchema(BaseModel):
+    """
+    Описание структуры запроса на получение задания.
+    """
+    model_config = ConfigDict(populate_by_name=True)
+
+    exercise_id: str = Field(alias="exerciseId",default_factory=fake.uuid4)
 
 class GetExercisesResponseSchema(BaseModel):
     """
