@@ -83,3 +83,9 @@ class UpdateExerciseRequestSchema(BaseModel):
     order_index: int | None = Field(default_factory=fake.integer, alias="orderIndex")
     description: str | None = Field(default_factory=fake.text)
     estimated_time: str | None = Field(default_factory=fake.estimated_time, alias="estimatedTime")
+
+class UpdateExerciseResponseSchema(BaseModel):
+    """
+       Описание структуры ответа на обновление задания.
+    """
+    exercise: ExerciseSchema
