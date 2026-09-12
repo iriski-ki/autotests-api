@@ -1,12 +1,13 @@
 from clients.exercises.exercises_schema import CreateExerciseRequestSchema, CreateExerciseResponseSchema, \
     ExerciseSchema, UpdateExerciseResponseSchema
 from clients.exercises.exercises_schema import GetExerciseResponseSchema
-from tools.assertions.base import assert_equal, assert_length
-from tools.assertions.courses import assert_course
-from tools.assertions.users import assert_user
+from clients.errors_schema import InternalErrorResponseSchema
+from tools.assertions.base import assert_equal
+
+from tools.assertions.errors import assert_internal_error_response
 
 
-def assert_create_exercises_response(request: CreateExerciseRequestSchema,response: CreateExerciseResponseSchema):
+def assert_create_exercises_response(request: CreateExerciseRequestSchema, response: CreateExerciseResponseSchema):
     """
     Проверяет, что поля созданного задания соответствуют данным из запроса на создание.
 
@@ -41,8 +42,8 @@ def assert_exercise(actual: ExerciseSchema, expected: ExerciseSchema):
 
 
 def assert_get_exercise_response(
-    get_exercise_response: GetExerciseResponseSchema,
-    create_exercise_response: CreateExerciseResponseSchema,
+        get_exercise_response: GetExerciseResponseSchema,
+        create_exercise_response: CreateExerciseResponseSchema,
 ) -> None:
     """
     Проверяет, что ответ на получение задания соответствует данным созданного задания.
@@ -53,20 +54,35 @@ def assert_get_exercise_response(
     """
     assert_exercise(get_exercise_response.exercise, create_exercise_response.exercise)
 
-def assert_update_exercise_response(
-    request: UpdateExerciseResponseSchema,
-    response: UpdateExerciseResponseSchema
-):
-        """
-        Проверяет, что ответ на обновление курса соответствует данным из запроса.
 
-        :param request: Исходный запрос на обновление курса.
-        :param response: Ответ API с обновленными данными курса.
-        :raises AssertionError: Если хотя бы одно поле не совпадает.
-        """
-        assert_equal(response.exercise.title, request.title, "title")
-        assert_equal(response.exercise.max_score, request.max_score, "max_score")
-        assert_equal(response.exercise.min_score, request.min_score, "min_score")
-        assert_equal(response.exercise.order_index, request.order_index, "order_index")
-        assert_equal(response.exercise.description, request.description, "description")
-        assert_equal(response.exercise.estimated_time, request.estimated_time, "estimated_time")
+def assert_update_exercise_response(
+        request: UpdateExerciseResponseSchema,
+        response: UpdateExerciseResponseSchema
+):
+    """
+    Проверяет, что ответ на обновление курса соответствует данным из запроса.
+
+    :param request: Исходный запрос на обновление курса.
+    :param response: Ответ API с обновленными данными курса.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    assert_equal(response.exercise.title, request.title, "title")
+    assert_equal(response.exercise.max_score, request.max_score, "max_score")
+    assert_equal(response.exercise.min_score, request.min_score, "min_score")
+    assert_equal(response.exercise.order_index, request.order_index, "order_index")
+    assert_equal(response.exercise.description, request.description, "description")
+    assert_equal(response.exercise.estimated_time, request.estimated_time, "estimated_time")
+
+
+def assert_exercise_not_found_response(
+        actual: InternalErrorResponseSchema):
+    """
+    Функция для проверки ошибки, если файл не найден на сервере.
+
+    :param actual: Фактический ответ.
+    :raises AssertionError: Если фактический ответ не соответствует ошибке "File not found"
+    """
+    # Ожидаемое сообщение об ошибке, если файл не найден
+    expected = InternalErrorResponseSchema(details="Exercise not found")
+    # Используем ранее созданную функцию для проверки внутренней ошибки
+    assert_internal_error_response(actual, expected)
