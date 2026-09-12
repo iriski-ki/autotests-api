@@ -2,7 +2,8 @@ from clients.exercises.exercises_schema import CreateExerciseRequestSchema, Crea
     ExerciseSchema, UpdateExerciseResponseSchema
 from clients.exercises.exercises_schema import GetExerciseResponseSchema
 from clients.errors_schema import InternalErrorResponseSchema
-from tools.assertions.base import assert_equal
+from tools.assertions.base import assert_equal, assert_length
+from tools.assertions.courses import assert_course
 
 from tools.assertions.errors import assert_internal_error_response
 
@@ -60,10 +61,10 @@ def assert_update_exercise_response(
         response: UpdateExerciseResponseSchema
 ):
     """
-    Проверяет, что ответ на обновление курса соответствует данным из запроса.
+    Проверяет, что ответ на обновление задания соответствует данным из запроса.
 
-    :param request: Исходный запрос на обновление курса.
-    :param response: Ответ API с обновленными данными курса.
+    :param request: Исходный запрос на обновление задания.
+    :param response: Ответ API с обновленными данными задания.
     :raises AssertionError: Если хотя бы одно поле не совпадает.
     """
     assert_equal(response.exercise.title, request.title, "title")
@@ -86,3 +87,36 @@ def assert_exercise_not_found_response(
     expected = InternalErrorResponseSchema(details="Exercise not found")
     # Используем ранее созданную функцию для проверки внутренней ошибки
     assert_internal_error_response(actual, expected)
+
+
+def assert_exercise(actual: ExerciseSchema, expected: ExerciseSchema):
+    """
+    Проверяет, что фактические данные задания соответствуют ожидаемым.
+
+    :param actual: Фактические данные задания.
+    :param expected: Ожидаемые данные задания.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    assert_equal(actual.id, expected.id, "id")
+    assert_equal(actual.title, expected.title, "title")
+    assert_equal(actual.course_id, expected.course_id, "course_id")
+    assert_equal(actual.max_score, expected.max_score, "max_score")
+    assert_equal(actual.min_score, expected.min_score, "min_score")
+    assert_equal(actual.description, expected.description, "description")
+    assert_equal(actual.estimated_time, expected.estimated_time, "estimated_time")
+
+
+def assert_get_exercises_response(get_exercise_response: GetExerciseResponseSchema,
+                                  create_exercise_responses: list[CreateExerciseResponseSchema]
+                                  ):
+    """
+    Проверяет, что ответ на получение списка заданий соответствует ответам на их создание.
+
+    :param get_exercise_response: Ответ API при запросе списка заданий.
+    :param create_exercise_responses: Список API ответов при создании задания.
+    :raises AssertionError: Если данные задания не совпадают.
+    """
+    assert_length(get_exercise_response.exercises, create_exercise_responses, "courses")
+
+    for index, create_exercise_response in enumerate(create_exercise_responses):
+        assert_exercise(get_exercise_response.exercises[index], create_exercise_response.exercise)
