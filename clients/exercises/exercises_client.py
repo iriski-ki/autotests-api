@@ -1,5 +1,6 @@
 from typing import TypedDict
 
+import allure
 from dns.e164 import query
 from httpx import Response, Client
 
@@ -14,6 +15,7 @@ class ExercisesClient(APIClient):
     Клиент для работы с /api/v1/exercises
     """
 
+    @allure.step("Get course")
     def get_exercises_api(self, query: GetExercisesQuerySchema) -> Response:
         """
         Метод получения списка заданий для определенного курса.
@@ -23,7 +25,7 @@ class ExercisesClient(APIClient):
         """
         return self.get("/api/v1/exercises",params=query.model_dump(by_alias=True))
 
-
+    @allure.step("Make GET_EXERCISE_API request to {exercise_id}")
     def get_exercise_api(self, exercise_id: str) -> Response:
         """
         Метод получения задания по идентификатору.
@@ -33,6 +35,7 @@ class ExercisesClient(APIClient):
         """
         return self.get(f"/api/v1/exercises/{exercise_id}")
 
+    @allure.step("Create course")
     def create_exercise_api(self, request: CreateExerciseRequestSchema) -> Response:
         """
         Метод создания задания.
@@ -43,6 +46,7 @@ class ExercisesClient(APIClient):
         """
         return self.post("/api/v1/exercises", json=request.model_dump(by_alias=True))
 
+    @allure.step("Make UPDATE_EXERCISE_API request to {exercise_id}")
     def update_exercise_api(self, exercise_id: str, request: UpdateExerciseRequestSchema) -> Response:
         """
         Метод обновления задания по идентификатору.
@@ -54,6 +58,7 @@ class ExercisesClient(APIClient):
         """
         return self.patch(f"/api/v1/exercises/{exercise_id}", json=request.model_dump(by_alias=True, exclude_none=True))
 
+    @allure.step("Make DELETE_EXERCISE_API request to {exercise_id}")
     def delete_exercise_api(self, exercise_id: str) -> Response:
         """
         Метод удаления задания по идентификатору.
