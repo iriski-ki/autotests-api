@@ -7,13 +7,15 @@ from pydantic import BaseModel
 from clients.authentication.authenticationClient import get_authentication_client, LoginRequestSchema
 from clients.authentication.authentication_schema import LoginRequestSchema
 from config import settings
+from clients.event_hooks import log_request_event_hook, log_response_event_hook
 
 
-class AuthenticationUserSchema(BaseModel,frozen = True):  # Структура данных пользователя для авторизации
+class AuthenticationUserSchema(BaseModel, frozen=True):  # Структура данных пользователя для авторизации
     email: str
     password: str
 
-@lru_cache(maxsize = None)
+
+@lru_cache(maxsize=None)
 # Создаем private builder
 def get_private_http_client(user: AuthenticationUserSchema) -> Client:
     """
@@ -35,5 +37,5 @@ def get_private_http_client(user: AuthenticationUserSchema) -> Client:
         base_url=settings.http_client.client_url,
         # Добавляем заголовок авторизации
         headers={"Authorization": f"Bearer {login_response.token.access_token}"},
-        event_hooks={"request": [curl_event_hook]}
+        event_hooks={"request": [curl_event_hook, log_request_event_hook], "response": [log_response_event_hook]}
     )
